@@ -1,0 +1,92 @@
+<!-- layout.component.html -->
+<div class="flex h-screen ">
+    <!-- Navigation Bar -->
+    <!-- layout.component.html -->
+    <div class="flex h-screen ">
+        <!-- Navigation Bar -->
+        <div class="w-1/5 h-screen border-r lg:flex flex-col p-4 hidden sticky top-0">
+            <div class="flex flex-row justify-between items-center gap-1">
+                <div class="flex flex-row gap-3 items-end">
+                    <button class="font-bold text-xl">DEFAI</button>
+                    <button class="bg-gray-800 text-white p-3 px-2 py-1 rounded inline-flex items-center text-l" routerLink="/payment">
+                        Upgrade
+                    </button>                    
+                </div>
+            </div>
+            <div class="">
+                <!-- create a dropdown for selecting bots -->
+                <app-bot-selection></app-bot-selection>
+            </div>
+            <div class="mt-5 overflow-y-auto w-full overflow-x-hidden">
+                <div class="w-full text-muted-foreground justify-start ">
+                    <div class="flex flex-wrap w-full gap-1">
+                        <button class="w-full" routerLink="/preview" routerLinkActive="bg-gray-300">
+                            Bot Preview
+                        </button>
+                        <div class="w-full text-muted-foreground mt-4 mb-2">
+                            Content
+                        </div>
+                        <button class="w-full" routerLink="/pdf" routerLinkActive="bg-gray-300">
+                            PDF
+                        </button>
+                        <button class="w-full" routerLink="/text" routerLinkActive="bg-gray-300">
+                            Text
+                        </button>
+                        <button class="w-full" routerLink="/website" routerLinkActive="bg-gray-300">
+                            Website
+                        </button>
+                        <div class="w-full text-muted-foreground mt-4 mb-2">
+                            Advanced
+                        </div>
+                        <button class="w-full rounded-md" routerLink="/dashboard" routerLinkActive="bg-gray-300">
+                            Dashboard
+                        </button>
+                        <button class="w-full">
+                            Chatlog
+                        </button>
+                        <button class="w-full">
+                            Google Sheets
+                        </button>
+                        <div class="w-full text-muted-foreground mt-4 mb-2">
+                            Integrations
+                        </div>
+                        <button class="w-full">
+                            Telegram
+                        </button>
+                        <button class="w-full">
+                            WhatsApp
+                        </button>
+                        <div class="w-full text-muted-foreground mt-4 mb-2">
+                            Account
+                        </div>
+                        <button class="w-full" routerLink="/user-profile" routerLinkActive="bg-gray-300">
+                            Profile
+                        </button>
+                        <button class="w-full">
+                            Customer Support
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-auto flex flex-col">
+                <div class="mb-4">
+                    <!-- Separator Placeholder -->
+                </div>
+                <div>
+                    <!-- User Button Placeholder -->
+                </div>
+            </div>
+        </div>
+        <div class="lg:hidden flex flex-row justify-between p-4">
+            <div class="flex flex-row gap-1 items-end">
+                <button class="font-bold text-xl">DEFAI</button>
+            </div>
+            <div class="flex flex-row items-center gap-4">
+                <!-- Mode Toggle and Hamburger Menu Placeholders -->
+            </div>
+        </div>
+    <!-- Main Content Area -->
+    <div class="flex-1 overflow-y-auto"> <!-- Added padding and margin -->
+        <router-outlet></router-outlet>
+    </div>
+</div>

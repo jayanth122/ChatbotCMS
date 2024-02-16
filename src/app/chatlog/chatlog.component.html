@@ -1,0 +1,271 @@
+<div class="flex flex-col lg:p-10">
+    <div class="shadow p-3" style="border-radius: 10px;">
+      <div class="text-2xl font-normal">Chatlog</div>
+      <span class="mt-2 light-text">
+        Access this integrated Chatlog feature to view your complete
+        conversation history and contact details.
+      </span>
+    </div>
+  
+  
+  
+    <div class="flex flex-col sm:flex-row mt-4 gap-2" style="width: 100%">
+      <!-- Dropdown for All Chats and Saved Chats -->
+      <div class="relative w-full mt-2 gap-2">
+        <select class="h-12 bg-transparent dropdown-menu shadow p-3" style="width: 100%"
+          [(ngModel)]="selectedChatCategory" (ngModelChange)="handleChatCategorySelect(selectedChatCategory)">
+          <option class="h-12 bg-transparent dropdown-menu " *ngFor="let category of chatCategories" [value]="category">{{
+            category }}</option>
+        </select>
+      </div>
+      <!-- Dropdown for Method -->
+      <div class="relative w-full mt-2 gap-2">
+        <select class="h-12 bg-transparent dropdown-menu shadow p-3" style="width: 100%" [(ngModel)]="selectedIntegration"
+          (ngModelChange)="handleSelectIntegrations(selectedIntegration)">
+          <option *ngFor="let integration of integrations" class="light-text" [value]="integration">{{ integration }}
+          </option>
+        </select>
+      </div>
+      <!-- Button for Date -->
+      <div class="relative w-full mt-2 gap-2 cal">
+        <mat-form-field >
+          <mat-label>pick a date  </mat-label>
+          <mat-date-range-input [rangePicker]="dateRangePicker">
+            <input matStartDate
+              placeholder="Start date"
+              #dateRangeStart>
+            <input matEndDate
+              placeholder="End date"
+              #dateRangeEnd
+              (dateChange)="handleDateChange(dateRangeStart, dateRangeEnd)">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matPrefix
+            [for]="dateRangePicker">
+          </mat-datepicker-toggle>
+          <mat-date-range-picker #dateRangePicker></mat-date-range-picker>
+        </mat-form-field>
+      </div>
+    </div>
+    <!-- <mat-form-field>
+      <mat-date-range-input [rangePicker]="picker" >
+        <input matStartDate (dateChange)="dateRangeChanged($event)" [(ngModel)]="startDate">
+        <input matEndDate (dateChange)="dateRangeChanged($event)" [(ngModel)]="endDate" >
+      </mat-date-range-input>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field> -->
+  
+    <div class="w-full mt-2 gap-2">
+      <div class="flex mt-2 justify-between">
+  
+  
+        <div class="flex mt-2  shadow" style="width: 40%; border-radius: 10px; ">
+          <div class="card scrollable-content" style="height: 650px; width: 100%;">
+            <div *ngIf="isLoading; else contentTemplate" class="flex justify-center items-center w-full h-full"
+              role="status">
+              <div class="flex justify-center items-center w-full h-full" role="status">
+                <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                  viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                    fill="currentColor" />
+                  <path
+                    d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                    fill="currentFill" />
+                </svg>
+                <span className="sr-only">Loading...</span>
+              </div>
+            </div>
+            <ng-template #contentTemplate>
+              <ng-container *ngIf="filteredConversations.length; else noConversationsTemplate">
+                <span class="ps-4 mt-5 gap-4">All Chats</span>
+                <div class="shadow m-3 bg-foreground" style="border-radius: 10px;"
+                  *ngFor="let item of filteredConversations">
+                  <div class="p-3"
+                    [ngClass]="{'m-3 pointer bg-muted': item?.conversation?._id === selectedItem?.conversation?._id}"
+                    (click)="handleConversation(item)">
+                    <div class="flex flex-row items-center gap-4">
+                      <div [ngSwitch]="item?.conversation?.method">
+                        <ng-container *ngSwitchCase="'whatsapp'">
+                          <img class="w-6 h-6 mx-3 mt-1" src="../../assets/whatsapp.svg" />
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'telegram'">
+                          <img class="w-6 h-6 mx-3 mt-1" src="../../assets/telegram.svg" />
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'website'">
+                          <lucide-icon color="#EF4444" name="globe" class="w-6 h-6"></lucide-icon>
+                        </ng-container>
+                        <ng-container *ngSwitchDefault>
+                        </ng-container>
+                      </div>
+  
+                      <div class="flex flex-col">
+                        <span class="text-xl font-small">{{ item?.conversation?.method === 'telegram' ?
+                          item?.conversation?.name :
+                          (item?.conversation?.method === 'whatsapp' ? item?.conversation?.phone_number :
+                          'Website') }}</span>
+                        <div class="text-sm light-text">
+                          {{ item?.conversation?.created_at.slice(0, 10)}}</div>
+                      </div>
+                    </div>
+                    <div class="flex justify-between" style="overflow: auto;">
+                      <div class="flex">
+                        <div class="px-3 card-content py-1 text-sm light-text">
+                          {{ item?.last_message?.message }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-template #noConversationsTemplate>
+                <div class="flex justify-center items-center w-full h-full light-text" role="status">
+                  conversation data not found
+                </div>
+              </ng-template>
+            </ng-template>
+          </div>
+        </div>
+  
+        <div class="flex justify-end sm:items-center w-full mt-2 ps-4" style="width: 60%;">
+          <div style="height: 650px; border-radius: 10px;"
+            class="flex flex-col  justify-center  rounded-sm w-full  shadow overflow-hidden">
+            <div class="flex flex-row items-center justify-between border-b p-2 bg-primary-foreground rounded-t-sm"
+              style="min-height: 95px;">
+              <div class="flex flex-row items-center gap-2">
+                <!-- <lucide-icon name="globe" class="w-8 h-8"></lucide-icon> -->
+                <div class="flex" [ngSwitch]="selectedItem?.conversation?.method">
+                  <ng-container *ngSwitchCase="'whatsapp'">
+                    <img class="w-6 h-6 mx-3 mt-1" src="../../assets/whatsapp.svg" />
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'telegram'">
+                    <img class="w-6 h-6 mx-3 mt-1" src="../../assets/telegram.svg" />
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'website'">
+                    <lucide-icon color="#EF4444" size="26px" name="globe"></lucide-icon>
+                  </ng-container>
+                  <ng-container *ngSwitchDefault>
+                    <!-- Placeholder if no method is selected -->
+                    <!-- <lucide-icon name="globe" class="w-6 h-6 mx-3 mt-1"></lucide-icon> -->
+                  </ng-container>
+                </div>
+                <!-- <span class="text-xl font-medium">{{ (selectedUserBotDetails$ | async)?.name }}</span> -->
+                <div class="flex flex-col">
+                  <span class="text-xl font-normal">{{selectedItem?.conversation?.method}}</span>
+                  <div class="text-sm">
+                    {{ selectedItem?.conversation?.created_at.slice(0, 10)}}
+                  </div>
+                </div>
+              </div>
+  
+              <div>
+                <ng-container *ngIf="selectedItem">
+                  <ng-container *ngIf="selectedItem.conversation.favorite; else notFavorite">
+                    <span class="icon-container" (click)="setFavoriteConversation(selectedItem)">
+                      <lucide-icon name="bookmark-check" class="w-6 h-6 mx-3 mt-1"></lucide-icon>
+                    </span>
+                  </ng-container>
+                  <ng-template #notFavorite>
+                    <span class="icon-container" (click)="setFavoriteConversation(selectedItem)">
+                      <lucide-icon name="bookmark" class="w-6 h-6 mx-3 mt-1"></lucide-icon>
+                    </span>
+                  </ng-template>
+                </ng-container>
+              </div>
+            </div>
+            <!-- Scrollable message area -->
+            <div *ngIf="!msgLoader" class="flex-grow overflow-auto mt-4 px-4 pt-4">
+              <div *ngFor="let message of conversationMessages$ | async; let i = index" class="flex flex-col mb-4">
+  
+                <div class="light-text"
+                  [ngClass]="{'text-accent ml-auto bg-foreground rounded-md p-3 max-w-max': message.message_by === 'user', 'text-foreground text-left bg-muted rounded-md p-3 max-w-max': message.message_by === 'bot'}">
+                  {{ message.message }}
+                </div>
+                <div
+                  [ngClass]="{'text-xs text-muted-foreground pl-2 ml-auto': message.message_by === 'user', 'text-xs text-muted-foreground pl-2': message.message_by === 'bot'}">
+                  {{ message.created_at | date: 'shortTime' }}
+                </div>
+              </div>
+            </div>
+  
+            <div *ngIf="msgLoader" class="flex items-center justify-center h-full">
+              <div class="loader">loading....</div> <!-- Add your loader component or HTML here -->
+            </div>
+  
+            <!-- Input area -->
+            <!-- <div class="flex flex-row w-full gap-2 p-5 relative bg-white">
+              <input [(ngModel)]="question" (keypress)="handleEnter($event)" [disabled]="isLoading"
+                class="pr-10 w-full bg-gray-100 z-50 p-2 rounded-md" placeholder="Type your message here...">
+              <button (click)="handleQuery()" [disabled]="isLoading"
+                class="absolute right-4 top-1/2 transform -translate-y-1/2 z-50">
+                <lucide-icon name="send-horizontal" class="w-6 h-6 text-primary-foreground"></lucide-icon>
+              </button>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <!-- loader html code -->
+  
+  <!-- <div role="status">
+    <svg
+      aria-hidden="true" 
+      className="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+      viewBox="0 0 100 101"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+        fill="currentColor"
+      />
+      <path
+        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+        fill="currentFill"
+      />
+    </svg>
+    <span className="sr-only">Loading...</span>
+  </div> -->
+  
+  
+  
+  <!-- <div class="w-full sm:w-4/12 overflow-y-auto" style="max-height: 650px;">
+              <div *ngFor="let chat of conversation$ | async" >
+                <div class="card">
+                  <div class="card-body">
+                    {{ chat.conversation.method }}
+                   
+                  </div>
+                </div>
+              </div>
+          </div> -->
+  
+  
+  
+  
+  
+  
+  <!-- <div class="w-full" *ngIf="isTabletOrMobile && mobile">
+    <div class="w-full text-2xl flex content-center justify-between font-medium py-4 bg-primary-foreground rounded">
+      <button class="font-normal text-base pl-0 pr-1" (click)="setMobile(false)">
+        <i class="fa fa-chevron-left mr-1"></i> Go Back
+      </button>
+      <div class="flex">
+      </div>
+    </div>
+    <div style="height: 583px; overflow: auto">
+    </div>
+  </div> -->

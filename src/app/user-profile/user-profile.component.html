@@ -1,0 +1,79 @@
+<div class="flex flex-col lg:p-5">
+    <div class="flex flex-row justify-between items-center">
+        <div>
+            <div>
+                <h1 class="text-3xl font-large font-bold">Account</h1>
+            </div>
+            <div class="mt-4">
+                <h3 class="text-xl text-gray-600">
+                    Here, you can see your account details, payment information,
+                    upgrade your plan, or delete your account.
+                </h3>
+            </div>
+        </div>
+    </div>
+    <div class="mt-8 flex flex-col lg:flex-row gap-4">
+        <div class="w-full flex items-center justify-center">
+            <img [src]="(userDetails$ | async)?.avatar" alt="user" class="w-25 h-25 rounded-full">
+        </div>
+        <div class="w-full border rounded-lg overflow-hidden">
+            <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between p-4">
+                <div class="lg:mr-4">
+                    <span class="text-xl font-bold mb-2">{{ (userDetails$ | async)?.subscription_plan }}</span><br />
+                    <span class="text-xl font-large text-gray-500 mb-2">250 USD/month</span>
+                </div>
+                <button
+                    class="flex items-center bg-gray-800 text-white p-5 px-6 py-4 rounded"
+                    routerLink="/payment"
+                >
+                    <span class="mr-2">
+                        <lucide-icon name="arrow-up-circle" class="icon-size mr-2"></lucide-icon>
+                    </span>
+                    Upgrade
+                </button>
+            </div>
+            <div class="flex items-center mt-2">
+                <span class="flex-grow"></span>
+            </div>
+        </div>
+        
+        <div class="w-full border rounded-lg overflow-hidden">
+            <div class=" bg-gray-700 text-white p-2 flex items-center justify-center">
+                <span class="text-xl font-bold">Credits</span>
+            </div>
+            <span class="text-gray-600 text-xl flex items-center p-2 justify-center">{{ (userDetails$ | async)?.credits }}</span>
+        </div>
+    </div>
+
+    <div class="w-full border rounded-lg overflow-hidden mt-4">
+        <div class=" bg-gray-700 text-white p-2 flex">
+            <span class="text-xl font-bold">Name</span>
+        </div>
+        <div class="ml-auto flex items-center p-7 rounded">
+            <span class="text-gray-600 text-xl">{{ (userDetails$ | async)?.name }}</span>
+        </div>
+    </div>
+
+    <div class="w-full border rounded-lg overflow-hidden mt-4">
+        <div class=" bg-gray-700 text-white p-2 flex">
+            <span class="text-xl font-bold">Email</span>
+        </div>
+        <div class="ml-auto flex items-center p-7 rounded">
+            <span class="text-gray-600 text-xl">{{ (userDetails$ | async)?.email }}</span>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <h3 class="text-xl font-medium">
+            If you want to permanently delete your account, click on the button below
+        </h3>
+    </div>
+    <div class="mt-4 flex justify-center items-center">
+        <button class="bg-red-600 text-white p-5 mt-2 rounded-lg flex items-center">
+            <span class="mr-2">
+                <!-- <Trash2 /> -->
+            </span>
+            Delete Account
+        </button>
+    </div>
+</div>

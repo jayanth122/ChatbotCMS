@@ -1,0 +1,4 @@
+export const environment = {
+    apiBaseUrl: 'https://hp.defai.chat',
+    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjU3YjQ5Y2U5YzAyZWJmMjk3Mzk3NzY1IiwibmFtZSI6IkpheWFudGggQ2hlbm51cGF0aSIsImVtYWlsIjoiamF5YW50aC5jaGVubnVwYXRpQGFpZm9jYWwuYWkiLCJhdmF0YXIiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS9BQ2c4b2NMZWVsTDNHa05WamM3VTRlZnRuNllkMXhwUUdtWUNWNnZjc28zU3VyQ2Q9czk2LWMiLCJib3RfY3JlYXRlZCI6dHJ1ZSwiaWF0IjoxNzA3NDk0MzU0LCJleHAiOjE3MDgyMTQzNTR9.46RShqzBSuUdxdUPG6hcGQ9-cjEC3TD_yMvI7E-PXvw',
+};

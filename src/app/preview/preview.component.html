@@ -1,0 +1,45 @@
+<div>
+    <div class="flex flex-col pl-10 pt-2">
+      <h1 class="text-3xl font-medium">Bot Preview</h1>
+      <span class="mt-2">Evaluate your chatbot responses here.</span>
+      <div class="flex flex-row gap-1 items-center">
+        <span class="w-4 text-destructive"> <lucide-icon class=" w-4 text-destructive text-red-700" name="alert-circle"></lucide-icon></span>
+        <p class="text-sm text-destructive text-red-700">
+          Please open another window to add content to your bot while continuing the conversation.
+        </p>
+      </div>
+    </div>
+    <div class="flex justify-center sm:items-center w-full mt-7">
+      <div class="flex flex-col h-[85vh] max-h-screen justify-center border rounded-sm w-full max-w-[700px] shadow overflow-hidden">
+        <div class="flex flex-row items-center justify-between border-b-2 p-4 bg-primary-foreground rounded-t-sm">
+          <div class="flex flex-row items-center gap-2">
+            <lucide-icon name="bot" class="w-8 h-8"></lucide-icon>
+            <span class="text-xl font-medium">{{ (selectedUserBotDetails$ | async)?.name }}</span>
+          </div>
+          <button (click)="resetChat()" class="mb-4 self-center">
+            Reset Chat
+          </button>
+        </div>
+        <!-- Scrollable message area -->
+        <div class="flex-grow overflow-auto mt-4 px-4 pt-4">
+          <div *ngFor="let message of conversation; let i = index" class="flex flex-col mb-4">
+            <div [ngClass]="{'text-accent ml-auto bg-foreground rounded-md p-3 max-w-max': message.role === 'user', 'text-foreground text-left bg-muted rounded-md p-3 max-w-max': message.role === 'bot'}">
+              {{ message.text }}
+            </div>
+            <div [ngClass]="{'text-xs text-muted-foreground pl-2 ml-auto': message.role === 'user', 'text-xs text-muted-foreground pl-2': message.role === 'bot'}">
+              {{ message.timestamp | date: 'shortTime' }}
+            </div>
+          </div>
+        </div>
+        <!-- Input area -->
+        <div class="flex flex-row w-full gap-2 p-5 relative bg-white">
+          <input [(ngModel)]="question" (keypress)="handleEnter($event)" [disabled]="isLoading" class="pr-10 w-full bg-gray-100 z-50 p-2 rounded-md" placeholder="Type your message here...">
+          <button (click)="handleQuery()" [disabled]="isLoading" class="absolute right-4 top-1/2 transform -translate-y-1/2 z-50">
+            <lucide-icon name="send-horizontal" class="w-6 h-6 text-primary-foreground"></lucide-icon>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  

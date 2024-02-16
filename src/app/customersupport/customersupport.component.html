@@ -1,0 +1,86 @@
+<!-- <div>
+    <div class="flex flex-col pl-10 pt-2">
+      <h1 class="text-3xl font-medium"> Customer Support</h1>
+      <span class="mt-2">Chat to assist you with all your inquires and concerns.</span>
+      
+    </div>
+    <div class="flex justify-center sm:items-center w-full mt-7">
+      <div class="flex flex-col h-[85vh] max-h-screen justify-center border rounded-sm w-full max-w-[700px] shadow">
+        <div class="flex flex-row items-center justify-between border-b-2 p-4 bg-primary-foreground rounded-t-sm">
+          <div class="flex flex-row items-center gap-2">
+            <span class="w-8 h-8"></span>
+            <span class="text-xl font-medium">Chat Window</span>
+          </div>
+        
+        </div>
+        <div class="h-[88vh] mt-4 px-4 pt-4">
+          <div *ngFor="let message of conversation; let i = index" class="flex flex-col">
+            <div [ngClass]="{'text-accent ml-auto bg-foreground rounded-md p-3 max-w-max mb-1': message.role === 'user', 'text-foreground text-left bg-muted rounded-md p-3 max-w-max mb-1': message.role === 'bot'}">
+              {{ message.text }}
+            </div>
+            <div [ngClass]="{'text-xs text-muted-foreground pl-2 mb-4 ml-auto': message.role === 'user', 'text-xs text-muted-foreground pl-2 mb-4': message.role === 'bot'}">
+              {{ message.timestamp | date: 'shortTime' }}
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-row w-full gap-2 p-5 relative">
+          <input [(ngModel)]="question" (keypress)="handleEnter($event)" [disabled]="isLoading" class="pr-10 w-full bg-gray-100 z-50 p-2 rounded-md" />
+          <button (click)="handleQuery()" [disabled]="isLoading" class="absolute right-4 top-1/2 transform -translate-y-1/2 z-50">
+            <lucide-icon name="send-horizontal"></lucide-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+</div>
+   -->
+
+<div>
+    <div class="flex flex-col pl-10 pt-2">
+      <h1 class="text-3xl font-medium">Customer Support</h1>
+      <span class="mt-2">Chat to assist you with all your inquiries and concerns.</span>
+    </div>
+    <div class="flex justify-center sm:items-center w-full mt-7">
+      <div class="flex flex-col h-[85vh] max-h-screen justify-center border rounded-sm w-full max-w-[700px] shadow">
+        <div class="flex flex-row items-center justify-between border-b-2 p-4 bg-primary-foreground rounded-t-sm">
+          <div class="flex flex-row items-center gap-2">
+            <div class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
+                <ng-container>
+                  <img src="/csAvatar.png" alt="Your Avatar" class="aspect-square h-full w-full" />
+                </ng-container>
+              </div>
+              
+            <span class="text-xl font-medium">Support Assistant</span>
+          </div>
+        </div>
+        <div class="h-[88vh] mt-4 px-4 pt-4 overflow-y-auto">
+          <ng-container *ngFor="let message of customerSupportMessages; let index = index">
+            Parse and format the created_at string
+            <ng-container *ngIf="message.created_at as createdAt">
+              <div [ngClass]="{'flex flex-col mb-4': true, 'items-start text-left': message.message_by === 'admin', 'items-end text-right': message.message_by !== 'admin'}">
+                <div class="text-accent rounded-md bg-foreground p-3 mb-1 max-w-xs">
+                  <p>{{ message.message }}</p>
+                </div>
+                <span class="text-xs text-foreground">{{ createdAt | date: 'shortTime' }}</span>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+        <div class="flex flex-row gap-2 p-4 relative">
+          <input
+            placeholder="Type your message here..."
+            class="pr-10 bg-primary-foreground z-50"
+            [(ngModel)]="inputMessage"
+          />
+          <button
+            class="absolute right-4 top-1/2 transform -translate-y-1/2 z-50"
+            (click)="sendMessage"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <path d="M22 12l-20 12 6-12-6-12 20 12z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+</div>
+  

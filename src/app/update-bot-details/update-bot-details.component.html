@@ -1,0 +1,115 @@
+<div *ngIf="showUpdateForm" class="p-10">
+  <div class="flex flex-row gap-10 items-center mb-4"> <!-- DialogHeader: Margin-bottom -->
+    <div class="relative mb-4">
+      <div class="font-bold text-xl mb-2">Bot Details</div>
+      <div class="text-gray-600">Here you can view and update the bot details.</div>
+    </div>
+    <button class="absolute top-0 gap-2 right-0 text-sm font-semibold p-2" (click)="closeUpdate()">X</button>
+    <button class="flex items-center gap-2 bg-red-500 text-white py-2 px-4 rounded" (click)="activateDelete()">
+      Delete
+    </button>
+  </div>
+  <div class="flex flex-col gap-2 mb-4">
+    <div class="flex flex-row justify-between items-center mb-1">
+      <div class="font-medium">Bot Name</div>
+    </div>
+    <div class="relative bg-gray-100 p-2 rounded">
+      <input type="text" class="w-full bg-transparent" [(ngModel)]="userBotName" />
+    </div>
+  </div>
+  <div class="flex flex-col gap-2">
+    <div class="font-medium">Bot Character</div>
+    <select class="form-select block w-full p-2 mt-1 border-gray-300 rounded-md shadow-sm"
+      [(ngModel)]="userBotCharacter">
+      <option value="helpdesk">Helpdesk</option>
+      <option value="sales">Sales</option>
+      <option value="lawyer">Lawyer</option>
+      <option value="teacher">Teacher</option>
+    </select>
+    <button class=" w-full p-2 mt-8 bg-black text-white py-2 px-4 rounded-md" (click)="updateBot()">
+      Update
+    </button>
+  </div>
+</div>
+
+<div *ngIf="showDeleteForm" class="p-5 mx-auto max-w-md">
+  <div class="mb-4">
+    <h2 class="text-2xl">Delete Chatbot?</h2>
+    <span class="text-md">
+      Are you sure you want to delete the chatbot
+      <span class="font-bold text-foreground">"{{userBotName}}"</span>?
+    </span>
+  </div>
+
+  <div class="flex flex-row items-center">
+    <lucide-icon name="AlertOctagon" class="w-4 h-4 text-red-500"></lucide-icon>
+    <span class="ml-2">
+      This action cannot be undone and you will lose all of your
+      conversations, data and information.
+    </span>
+  </div>
+  <div class="mt-4 space-y-4">
+    <div class="w-full">
+      <button class="w-full bg-black text-white py-2 px-4 rounded"
+      (click)="deleteBot()">
+        Delete
+      </button>
+    </div>
+    <div class="w-full">
+      <button class="w-full border border-gray-300 text-gray-700 py-2 px-4 rounded hover:bg-gray-100"
+        (click)="activateUpdate()">
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- <div *ngIf="showDeleteForm" class="p-5">
+  <div class="mb-4">
+    <h2 class="text-2xl">Delete Chatbot?</h2>
+    <span class="text-md">
+      Are you sure you want to delete the chatbot
+      <span class="font-bold text-foreground">"{{userBotName}}"</span>?
+    </span>
+  </div>
+
+  <div class="flex flex-row items-center">
+    <lucide-icon name="AlertOctagon" class="w-4 h-4 text-red-500"></lucide-icon>
+    <span class="ml-2">
+      This action cannot be undone and you will lose all of your
+      conversations, data and information.
+    </span>
+  </div>  
+  <div class="mt-4 space-y-4"> 
+    <div class="w-full"> 
+      <button class="w-full bg-black text-white py-2 px-4 rounded">
+        Delete
+      </button>
+    </div>
+    <div class="w-full"> 
+      <button class="w-full border border-gray-300 text-gray-700 py-2 px-4 rounded hover:bg-gray-100">
+        Cancel
+      </button>
+    </div>
+  </div>
+</div> -->
+
+
+
+
+<!-- <div *ngIf="showDeleteForm" class="p-4">
+  <div class="flex flex-row gap-10 items-center mb-4">
+    <div class="relative mb-4">
+      <div class="font-bold text-2xl mb-2">Delete Chatbot?</div>
+      <div class="text-gray-600">Are you sure you want to delete the chatbot "{{ userBotName }}"?</div>
+      <div class="flex justify-center items-center p-3"> 
+        <lucide-icon name="AlertOctagon" class="w-4 h-4 text-red-500"></lucide-icon>
+        <span class="text-md">
+          This action cannot be undone and you will lose all of your
+          conversations, data, and information.
+        </span>
+      </div>
+    </div>    
+  </div>
+</div> -->

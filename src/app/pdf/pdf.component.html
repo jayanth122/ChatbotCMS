@@ -1,0 +1,133 @@
+<div class="flex flex-col lg:p-10">
+    <h1 class="text-3xl font-medium">PDF</h1>
+    <span class="mt-1 text-lg">
+        Here, you can upload PDF documents with your business information.
+    </span>
+    <div class="flex flex-row justify-between items-center mt-1">
+        <div class="flex flex-row gap-1 items-center">
+            <lucide-icon class=" w-4 text-destructive text-red-500" name="alert-circle"></lucide-icon>
+            <p class="text-sm text-destructive text-red-500">Maximum file size: 10MB</p>
+        </div>
+        <a href="https://defai-uat2.nyc3.cdn.digitaloceanspaces.com/defai/DEFAI%201.1.pdf" target="_blank"
+            rel="noopener noreferrer" class="text-sm underline text-blue-600 mr-2 sm:mr-32">
+            Sample PDF
+        </a>
+    </div>
+
+    <div class="flex w-full my-4">
+        <Input type="file" accept=".pdf" ref={inputFileRef} (change)="onFileSelected($event)"
+            class="flex-grow file:bg-foreground file:text-primary-foreground p-0 file:h-10 hover:file:bg-zinc-700 file:cursor-pointer bg-primary-foreground">
+        <Button [disabled]="!isPdfSelected" (click)="uploadPdf()" class="ml-2 bg-black text-white hover:bg-gray-800 hover:text-white disabled:bg-gray-600">
+            <lucide-icon class="text-destructive text-white mr-2" name="upload">Upload</lucide-icon>
+        </Button>
+    </div>
+
+    <div class="mt-2 text-xl font-semibold">Manage PDF Files</div>
+    <div class="mt-1 text-lg">
+        Here, you can manage your uploaded PDF files.
+    </div>
+
+    <div class="w-full">
+        <div class="py-4">
+            <div class="flex w-full my-4">
+                <Input placeholder="Search PDF Name..." class="w-full bg-primary-foreground" />
+                <Button class="ml-2 bg-red-500 text-white hover:bg-red-600 disabled:bg-red-300 w-32 rounded-md" (click)="onDeleteSelected()">
+                    <!-- <Trash2 class="text-destructive text-white mr-2" /> -->
+                    Delete
+                </Button>
+            </div>
+        </div>
+        <div class="rounded-md border">
+            <table class="min-w-full leading-normal">
+                <thead>
+                    <tr class="h-16 bg-gray-100">
+                        <th
+                            class="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                            Select
+                        </th>
+                        <th
+                            class="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                            File Name
+                        </th>
+                        <th
+                            class="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                            Updated At
+                        </th>
+                        <th
+                            class="px-5 py-3 border-b-2 border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                            File Size
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="h-16 border-b border-gray-200" *ngFor="let pdf of pdfData$ | async">
+                      <td class="px-5 py-2 align-middle">
+                        <!-- Add a template reference variable #checkbox -->
+                        <input type="checkbox" class="leading-tight" #checkbox (change)="onCheckboxChange(pdf._id, checkbox.checked)" />
+                      </td>
+                      <td class="px-5 py-2 align-middle">
+                        {{ pdf.name }}
+                      </td>
+                      <td class="px-5 py-2 align-middle">
+                        {{ pdf.updated_at | date:'dd/MM/yyyy' }}
+                      </td>
+                      <td class="px-5 py-2 align-middle">
+                        {{ formatBytes(pdf.size) }}
+                      </td>
+                    </tr>
+                  </tbody>
+            </table>
+        </div>
+        <div class="flex items-center py-4">
+            <div>
+                <Button variant="outline" size="sm" onClick={handlePreviousPage} disabled={!table.getCanPreviousPage()}>
+                    <!-- <MoveLeft class="mr-2"></MoveLeft> -->
+                    Previous
+                </Button>
+            </div>
+
+            <div class="flex-1 text-center text-sm text-muted-foreground">
+                Page
+            </div>
+
+
+            <div>
+                <Button variant="outline" size="sm" onClick={handleNextPage} disabled={!table.getCanNextPage()}>
+                    Next
+                    <!-- <MoveRight class="ml-2"></MoveRight> -->
+                </Button>
+            </div>
+        </div>
+        <Dialog open={openModal} onOpenChange={setOpenModal}>
+            <!-- <DialogTrigger asChild></DialogTrigger>
+            <DialogContent>
+                <DialogHeader class="flex flex-row gap-10 items-center">
+                    <div>
+                        <DialogTitle>Delete PDF Data?</DialogTitle>
+                    </div>
+                </DialogHeader>
+                <div class="gap-2 py-2">
+                    <span>Are you sure you want to delete the </span>
+                    <span> from your data knowledge?</span>
+                </div>
+                <div class="flex">
+                    <AlertOctagon color="red" />
+                    <span class="ml-2">
+                        This action can not be undone and you will have to retrain your
+                        chatbot with this information.
+                    </span>
+                </div>
+
+                <div class="flex w-full space-x-2">
+                    <Button variant="outline" class="flex-1 bg-black text-white justify-center">
+                        Cancel
+                    </Button>
+                    <Button
+                        class="flex-1 bg-red-500 text-white hover:bg-red-600 disabled:bg-red-300 justify-center">
+                        {isLoading ? <Loader2 class="animate-spin" /> : "Delete"}
+                    </Button>
+                </div>
+            </DialogContent> -->
+        </Dialog>
+    </div>
+</div>

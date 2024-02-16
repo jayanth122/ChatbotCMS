@@ -1,0 +1,110 @@
+<div *ngIf="showCreateForm" class="flex flex-col justify-center items-center w-full">
+    <div class="sm:w-[500px] w-full bg-white shadow-md rounded-mlg overflow-hidden">
+        <div class="p-5">
+            <div class="flex flex-col gap-6">
+                <div class="flex flex-row justify-between items-center relative">
+                    <button class="flex items-center gap-2" (click)="closeCreateBot()">
+                        <!-- Added flex and gap for alignment -->
+                        <lucide-icon name="chevron-left" class="w-4 h-4"></lucide-icon>
+                        Go Back
+                    </button>
+                    <span class="text-lg">Step 1 of 2</span>
+                </div>
+                <div class="flex justify-center text-xl font-semibold">Create chatbot</div>
+            </div>
+            <div class="flex justify-center text-md mt-2">
+                Create your new AI chatbot with two simple steps.
+            </div>
+        </div>
+        <div class="p-5">
+            <div class="flex flex-col gap-4">
+                <div>
+                    <div class="flex flex-row justify-between w-full mb-1 items-center">
+                        <div class="flex items-center justify-between">
+                            <label class="font-medium text-sm">Bot Name*</label>
+                            <label *ngIf="botExists" class="absolute right-3 text-sm text-red-600">Bot name already
+                                exists</label>
+                        </div>
+                    </div>
+                    <div class="relative bg-gray-100 my-2 flex items-center">
+                        <input type="text" [(ngModel)]="botName" (input)="checkBotExists()" maxlength="20"
+                            placeholder="Name your bot..." class="w-full pl-3 bg-transparent rounded-md p-2"
+                            style="padding-right: 60px;" />
+                        <span class="absolute right-3 p-2 text-sm text-gray-600">
+                            {{botName.length || 0}}/20
+                        </span>
+                    </div>
+                </div>
+                <div>
+                    <label class="font-medium text-sm">Bot Character*</label>
+                    <div class="py-2 text-xs">
+                        Personality that your chatbot will adopt in its interactions with your clients.
+                    </div>
+                    <div class="w-full bg-gray-100 rounded-md">
+                        <select [(ngModel)]="botCharacter" class="w-full bg-transparent p-4 rounded-md">
+                            <option value="none" selected hidden>Select bot's character</option>
+                            <option value="helpdesk">Helpdesk</option>
+                            <option value="sales">Sales</option>
+                            <option value="lawyer">Lawyer</option>
+                            <option value="teacher">Teacher</option>
+                        </select>
+                    </div>
+                    <button class="w-full p-2 mt-8 bg-gray-200 text-black py-2 px-4 rounded-md"
+                        (click)="toggleVisibility()"
+                        [disabled]="!botName || botName.length === 0 || botCharacter === 'none' || botExists || !botCharacter">
+                        Next
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="showUploadSection" class="flex flex-col justify-center items-center w-full">
+    <div class="sm:w-[500px] w-full bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="p-5">
+            <div class="flex flex-col gap-4">
+                <div class="flex flex-row justify-between items-center relative">
+                    <button class="flex items-center gap-2" (click)="backToPreviousStep()">
+                        <lucide-icon name="chevron-left" class="w-4 h-4"></lucide-icon>
+                        Go Back
+                    </button>
+                    <span class="text-lg">Step 2 of 2</span>
+                </div>
+                <div class="text-2xl font-bold text-center w-full">
+                    Adding training material
+                </div>
+                <div class="text-sm text-center w-full text-gray-500">
+                    Please upload atleast one of the following to train your chatbot.
+                </div>
+                <div class="flex flex-row justify-between items-center relative">
+                    <span class="text-sm font-bold">Upload Text</span>
+                </div>
+                <div class="flex flex-row justify-between items-center relative">
+                    <textarea [(ngModel)]="botText" maxlength="300"
+                        placeholder="e.g. Our Company, ABC Corp, was founded in 2000."
+                        class="w-full p-2 pl-3 bg-transparent rounded-md" style="padding-right: 60px;"
+                        (input)="botTextUpdate()"
+                        ></textarea>
+                </div>
+                <div class="flex flex-row justify-between items-center relative">
+                    <span class="absolute right-3 p-2 text-sm text-gray">
+                        {{botText.length || 0}}/300
+                    </span>
+                </div>
+                <div class="flex flex-row justify-between items-center relative">
+                    <span class="text-sm font-bold">Upload PDF</span>
+                </div>
+                <div class="flex flex-row justify-between items-center relative">
+                    <input type="file" accept=".pdf" (change)="onFileSelected($event)"
+                        class="p-2 h-10 cursor-pointer bg-primary-foreground">
+                </div>
+                <button class="w-full p-2 mt-4 bg-gray-200 text-black py-2 px-4 rounded-md"
+                [disabled]="!botText && !botPdfFile"
+                    (click)="createBot()">
+                    Create
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

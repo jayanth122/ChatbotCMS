@@ -1,0 +1,94 @@
+<div class="flex h-screen ">
+    <div class="flex h-screen ">
+        <!-- Navigation Bar -->
+        <div class="w-1/5 h-screen border-r lg:flex flex-col p-4 hidden sticky top-0">
+            <div class="flex flex-row justify-center items-center w-full">
+                <button class="font-bold text-7xl text-center w-full">DEFAI</button>
+            </div>            
+            <div class="">
+                <app-bot-selection></app-bot-selection>
+            </div>
+            <div class="mt-5 overflow-y-auto w-full overflow-x-hidden">
+                <div class="w-full text-muted-foreground justify-start ">
+                    <div class="flex flex-wrap w-full p-1">
+                        <button class="flex items-center justify-center w-full rounded-md p-1 text-md" routerLink="/preview" routerLinkActive="bg-gray-300">
+                            <lucide-icon class="w-4 h-4 mr-2" name="bot"></lucide-icon>
+                            Bot Preview
+                        </button>
+                        <div class="w-full text-muted-foreground mt-4 mb-2 text-md">
+                            Content
+                        </div>
+                        <button class="flex items-center justify-center w-full rounded-md p-1 text-md" routerLink="/pdf" routerLinkActive="bg-gray-300">
+                            <lucide-icon class="w-4 h-4 mr-2" name="file-text"></lucide-icon>
+                            PDF
+                          </button>
+                          <button class="flex items-center justify-center w-full rounded-md p-1 text-md" routerLink="/text" routerLinkActive="bg-gray-300">
+                            <lucide-icon class="w-4 h-4 mr-2" name="pen-line"></lucide-icon>
+                            Text
+                          </button>
+                          <button class="flex items-center justify-center w-full rounded-md p-1 text-md" routerLink="/website" routerLinkActive="bg-gray-300">
+                            <lucide-icon class="w-4 h-4 mr-2" name="globe"></lucide-icon>
+                            Website
+                          </button>                          
+                        <div class="w-full text-muted-foreground mt-4 mb-2">
+                            Advanced
+                        </div>
+                        <!-- <button class="w-full rounded-md text-md" routerLink="/dashboard" routerLinkActive="bg-gray-300">
+                            Dashboard
+                        </button> -->
+                        <button class="flex items-center justify-center w-full rounded-md p-1 text-md" routerLink= "/chatlog" routerLinkActive="bg-gray-300">
+                            <lucide-icon class="w-4 h-4 mr-2" name="gallery-vertical-end"></lucide-icon>
+                            Chatlog
+                        </button>
+                        <button class="flex items-center justify-center w-full rounded-md p-1 text-md" routerLink="/googlesheet" routerLinkActive="bg-gray-300">
+                            <lucide-icon class="w-4 h-4 mr-2" name="sheet"></lucide-icon>
+                            Google Sheets
+                        </button>
+                        <div class="w-full text-muted-foreground mt-4 mb-2 text-md">
+                            Integrations
+                        </div>
+        
+                        <button class="flex items-center justify-center w-full rounded-md p-1 text-md" routerLink="/telegram" routerLinkActive="bg-gray-300">
+                            <img class="w-4 h-4 mr-2" src="../../assets/telegram.svg"/>
+                            Telegram
+                        </button>
+                        <button class="flex items-center justify-center w-full rounded-md p-1 text-md" routerLink="/whatsapp">
+                            <img class="w-4 h-4 mr-2" src="../../assets/whatsapp.svg"/>
+                            WhatsApp
+                        </button>
+                        <div class="w-full text-muted-foreground mt-4 mb-2 text-md">
+                            Account
+                        </div>
+                        <button class="flex items-center justify-center w-full rounded-md p-1 text-md" routerLink="/user-profile" routerLinkActive="bg-gray-300">
+                            <lucide-icon class="w-4 h-4 mr-2" name="user-round"></lucide-icon>
+                            Profile
+                        </button>
+                        <button class="w-full rounded-md text-md" routerLink ="/customer-support" routerLinkActive = "bg-gray-300">
+                            Customer Support
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-auto flex flex-col">
+                <div class="mb-4">
+                    <!-- Separator Placeholder -->
+                </div>
+                    <div class="flex justify-center items-center h-auto ">
+                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md w-full" routerLink="/payment">
+                          Upgrade
+                        </button>
+                      </div>
+            </div>
+        </div>
+        <div class="lg:hidden flex flex-row justify-between p-4">
+            <div class="flex flex-row gap-1 items-end">
+                <button class="font-bold text-xl">DEFAI</button>
+            </div>
+            <div class="flex flex-row items-center gap-4">
+            </div>
+        </div>
+    <!-- Main Content Area -->
+    <div class="flex-1 overflow-y-auto"> <!-- Added padding and margin -->
+        <router-outlet></router-outlet>
+    </div>
+</div>
